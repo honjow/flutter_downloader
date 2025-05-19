@@ -342,6 +342,9 @@ static NSMutableDictionary<NSString*, NSMutableDictionary*> *_runningTaskById = 
 - (NSURL*)fileUrlOf:(NSString*)taskId taskInfo:(NSDictionary*)taskInfo downloadTask:(NSURLSessionDownloadTask*)downloadTask {
      NSString *filename = taskInfo[KEY_FILE_NAME];
      NSString *suggestedFilename = downloadTask.response.suggestedFilename;
+    const char *byte = NULL;
+    byte = [suggestedFilename cStringUsingEncoding:NSISOLatin1StringEncoding];
+    suggestedFilename = [[NSString alloc] initWithCString:byte encoding:NSUTF8StringEncoding];
      if (debug) {
          NSLog(@"SuggestedFileName: %@", suggestedFilename);
      }
